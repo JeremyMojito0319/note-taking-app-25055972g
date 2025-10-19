@@ -462,20 +462,28 @@
     </div>
 
     <script>
+        console.log('Script execution started.');
+
         class NoteTaker {
             constructor() {
+                console.log('NoteTaker constructor started.');
                 this.notes = [];
                 this.currentNote = null;
                 this.isLoading = false;
                 this.init();
+                console.log('NoteTaker constructor finished.');
             }
 
             async init() {
+                console.log('init() started.');
                 this.bindEvents();
+                console.log('init(): events bound. Now loading notes.');
                 await this.loadNotes();
+                console.log('init() finished.');
             }
 
             bindEvents() {
+                console.log('bindEvents() started.');
                 document.getElementById('newNoteBtn').addEventListener('click', () => this.createNewNote());
                 document.getElementById('generateNoteBtn').addEventListener('click', () => this.showGenerateModal());
                 document.getElementById('saveBtn').addEventListener('click', () => this.saveNote());
@@ -514,6 +522,7 @@
                 if (modalClose) modalClose.addEventListener('click', () => this.hideGenerateModal());
                 if (modalCancel) modalCancel.addEventListener('click', () => this.hideGenerateModal());
                 if (modalConfirm) modalConfirm.addEventListener('click', () => this._onGenerateConfirm());
+                console.log('bindEvents() finished.');
             }
 
             showGenerateModal() {
@@ -565,15 +574,20 @@
             }
 
             async loadNotes() {
+                console.log('loadNotes() started.');
                 this.isLoading = true;
                 this.showMessage('Loading notes...', 'loading');
                 
                 try {
+                    console.log('loadNotes(): fetching /api/notes');
                     const response = await fetch('/api/notes');
+                    console.log('loadNotes(): fetch response received.', response);
                     if (!response.ok) throw new Error(`Failed to load notes. Status: ${response.status}`);
                     
                     const text = await response.text();
+                    console.log('loadNotes(): response text received.', text);
                     this.notes = text ? JSON.parse(text) : []; // Handle empty response
+                    console.log('loadNotes(): notes parsed.', this.notes);
 
                     this.renderNotesList();
                     this.hideMessage();
@@ -582,6 +596,7 @@
                     this.showMessage(`Error loading notes: ${error.message}. Check console for details.`, 'error');
                 } finally {
                     this.isLoading = false;
+                    console.log('loadNotes() finished.');
                 }
             }
 
@@ -889,7 +904,9 @@
         }
 
         // Initialize the app
+        console.log('Initializing NoteTaker app.');
         const noteTaker = new NoteTaker();
+        console.log('NoteTaker app initialized.');
     </script>
 </body>
 </html>
