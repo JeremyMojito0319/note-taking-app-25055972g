@@ -4,10 +4,6 @@
     {
       "src": "src/main.py",
       "use": "@vercel/python"
-    },
-    {
-      "src": "src/static/index.html",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -21,7 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "src/static/index.html"
+      "dest": "/src/static/index.html"
     }
   ]
 }
