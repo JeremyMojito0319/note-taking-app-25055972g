@@ -9,7 +9,7 @@ from src.models.user import db
 from src.routes.user import user_bp
 from src.routes.note import note_bp
 from src.models.note import Note
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
@@ -37,7 +37,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 try:
     engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     with engine.connect() as conn:
-        conn.execute("SELECT 1")
+        conn.execute(text("SELECT 1"))
     print("Database connection successful.")
 except OperationalError as e:
     print("Database connection failed:", e)
