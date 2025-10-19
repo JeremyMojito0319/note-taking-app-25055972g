@@ -570,13 +570,16 @@
                 
                 try {
                     const response = await fetch('/api/notes');
-                    if (!response.ok) throw new Error('Failed to load notes');
+                    if (!response.ok) throw new Error(`Failed to load notes. Status: ${response.status}`);
                     
-                    this.notes = await response.json();
+                    const text = await response.text();
+                    this.notes = text ? JSON.parse(text) : []; // Handle empty response
+
                     this.renderNotesList();
                     this.hideMessage();
                 } catch (error) {
-                    this.showMessage(`Error loading notes: ${error.message}`, 'error');
+                    console.error('Error details:', error); // Log the full error to the console
+                    this.showMessage(`Error loading notes: ${error.message}. Check console for details.`, 'error');
                 } finally {
                     this.isLoading = false;
                 }
