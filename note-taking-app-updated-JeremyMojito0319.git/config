@@ -1,0 +1,14 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/COMP5241-2526Sem1/note-taking-app-updated-JeremyMojito0319.git
+[remote "newrepo"]
+	url = git@github.com:JeremyMojito0319/note-taking-app-25055972g.git
+	fetch = +refs/heads/*:refs/remotes/newrepo/*
+[branch "main"]
+	remote = newrepo
+	merge = refs/heads/main
